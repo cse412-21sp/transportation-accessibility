@@ -18,6 +18,44 @@ In this project we explore the current level of transit accessibility at the blo
 To answer this, we utilize several datasets related to transit availability and the socioeconomics of the Seattle region. The fundamental transit schedule and stop location data is drawn from the King County Metro (KCM) [General Transit Feed Specification (GTFS)](http://metro.kingcounty.gov/gtfs/). This resource provides a static list of all available stops, routes, and schedules in the KCM network. To create the choropleth maps, block group shapefiles are taken from the American Community Survey (ACS) [TIGER shapefiles](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html). These designate areas at which socioeconomic census data is available for. The ACS also provides socioeconomic data in the form of marginal counts for each block group, as well as a set of limited microdata called the [public use microdata samples (PUMS)](https://www.census.gov/programs-surveys/acs/microdata.html).
 
 [data name:"block_group_data" source:"block_group_data.csv" /]
-[data name:"king_county_block_groups" source:"king_county_block_groups.json" /]
 
-[D3Choropleth data:block_group_data /]
+[var name:"accessMetric" value:"num_stops" /]
+[Radio value:accessMetric options:`["num_stops", "avg_num_routes_per_stop", "avg_route_frequency", "avg_accessible_stops"]`  /]
+
+[FullWidth]
+  [D3Choropleth data:block_group_data accessMetric:accessMetric /]
+[/FullWidth]
+
+[Scroller className:"hasBackground" currentStep:myLocation]
+
+  [Graphic className:"d3-component-container"]
+    [D3Choropleth data:block_group_data className:"d3-component" state:`myLocation+1` /]
+  [/Graphic]
+
+  [Step]
+    This `Scroller` uses some custom CSS to set the background color to "#33333f" [Inline][div style:`{background: "#33333f", width: 12, height: 12}` /][/Inline].
+  [/Step]
+
+  [Step]
+    It also uses custom CSS to style the `Graphic` (which is a custom D3 component) so that it appears as a fixed visualization next to the scrolling text.
+  [/Step]
+
+  [Step]
+    What's cool about this `CustomD3Component` is that it updates as we scroll. It does this by leveraging the `update` function to animate the point as it moves to a new position.
+  [/Step]
+
+  [Step]
+    To keep track of where we are in the `Scroller`, we first defined a dynamic Idyll variable named `myLocation` using the following code: `[var name:"myLocation" value:0 /]`
+  [/Step]
+
+  [Step]
+    Each time we scroll to a new `Step`, the `Graphic` updates it state based on this dynamic variable, which can be used to parameterize the visualization.
+  [/Step]
+
+  [Step]
+    Right now, the value of `myLocation` is [Display value:myLocation /]. Cool huh?
+
+    [span style:`{color:'#aaa', fontStyle:'italic'}`]If you scroll back and forth between this `Step` and the previous one, notice how the value that is displayed changes based on when the new `Step` is triggered.[/span]
+  [/Step]
+
+[/Scroller]
