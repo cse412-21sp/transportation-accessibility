@@ -1,8 +1,11 @@
-# CSE412 Final Project Template (Idyll)
+# CSE412 Final Project: Transportation Accessibility
 
 ## Team Members
 
-Place your team member names here.
+Zack Aemmer
+Patrick Cheng
+Avin Kana
+Jie Shao
 
 ### Contribution Statements
 
@@ -10,7 +13,7 @@ Add individual contribution statements here.
 
 ## Project Proposal Abstract
 
-This is the space for you to add a description for your project.
+In this project we explore the current level of transit accessibility for block groups in Seattle. Our main question is which areas currently have the most, and least access to transit in King county. We follow this up with an analysis of who is most affected in areas with low transit coverage, and potentially allow the viewer to interactively place transit stops or change service parameters to view the effects on accessibility. To accomplish this we first quantify accessibility based on the KCM GTFS transit stop locations and schedules, and create a choropleth map as our main visualization.
 
 ## Getting Started
 
