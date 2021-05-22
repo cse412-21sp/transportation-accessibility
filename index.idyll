@@ -34,11 +34,11 @@ To answer this, we utilize several datasets related to transit availability and 
 
 
 [Aside]
-![Race_Pie_Chart](/static/images/Race_Pie_Chart.png)
+![Race_Pie_Chart](./static/images/Race_Pie_Chart.png)
 
-![Accessible_Stops](/static/images/Acc_Stops_Hist.png)
+![Accessible_Stops](./static/images/Acc_Stops_Hist.png)
 
-![Total_Number_Of_Stops](/static/images/Num_Stops_Hist.png)
+![Total_Number_Of_Stops](./static/images/Num_Stops_Hist.png)
 [/Aside]
 [br /][br /]
 
