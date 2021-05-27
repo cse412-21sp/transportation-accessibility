@@ -47,6 +47,20 @@ function colorBlockGroups(d, props) {
   }
 }
 
+// Function that returns the range dependent on which metric is selected
+function getActiveRange(props) {
+  switch (props.accessMetric) {
+    case "num_stops":
+      return d3.ticks(10,75,numBreaks)
+    case "avg_num_routes_per_stop":
+      return d3.ticks(1,2,numBreaks)
+    case "avg_route_frequency":
+      return d3.ticks(45,5,numBreaks)
+    case "avg_accessible_stops":
+      return d3.ticks(50,100,numBreaks)
+  }
+}
+
 class D3Choropleth extends D3Component {
   initialize(node, props) {
     // The svg
@@ -56,8 +70,8 @@ class D3Choropleth extends D3Component {
       .style("border", '1px dashed #ccc')
     )
 
-    // The legend
-    var activeRange = d3.range(10,75,numBreaks+1) //Break bins into 1 less than the number of colors in the scale
+    // The Legend range of bins
+    var activeRange = getActiveRange(props);
 
     // Name of selected metric and background color
     svg
@@ -90,11 +104,12 @@ class D3Choropleth extends D3Component {
       .attr("y", function(d,i) {
         return legendY + 5 + (i*20);
       })
+      .attr("class","binRect")
       .attr("width", 10)
       .attr("height", 10)
       .style("stroke", "black")
       .style("stroke-width", 0.5)
-      .style("fill", function(d){return colorScaleStops(d);})
+      .style("fill", function(d){return colorScaleStops(d)})
     // Text labels stating bin range
     legendEntries
       .append('text')
@@ -102,6 +117,7 @@ class D3Choropleth extends D3Component {
       .attr("y", function(d,i) {
         return legendY + 5 + 10 + (i*20)
       })
+      .attr("class","binText")
       .text(function(d,i) {
         if (i+1 != activeRange.length) {
           return ""+activeRange[i]+"-"+activeRange[i+1];
@@ -110,8 +126,6 @@ class D3Choropleth extends D3Component {
           return ""+activeRange[i]+"+"
         }
       })
-
-    // let metricValues = props.data.map(a => a.foo);
 
     // Hover functions
     function handleMouseOver(d, i) {
@@ -151,14 +165,38 @@ class D3Choropleth extends D3Component {
 
   // Use this function to update the visualization.
   update(props, oldProps) {
+    console.log(props);
 
     // Update map colors
     this.svg.selectAll('.BlockGroup')
       .attr("fill", function (d) {return colorBlockGroups(d, props)})
 
     //Update legend
+    var activeRange = getActiveRange(props);
     this.svg.selectAll('.LegendTitle')
       .text(""+props.accessMetric)
+    this.svg.selectAll('.binRect')
+      .attr("fill", function (d, props) {
+        switch (props.accessMetric) {
+          case "num_stops":
+            return colorScaleStops(d);
+          case "avg_num_routes_per_stop":
+            return colorScaleRoutes(d);
+          case "avg_route_frequency":
+            return colorScaleFreq(d);
+          case "avg_accessible_stops":
+            return colorScaleAccess(d);
+        }
+      })
+    this.svg.selectAll('.binText')
+      .text(function(d,i) {
+        if (i+1 != activeRange.length) {
+          return ""+activeRange[i]+"-"+activeRange[i+1];
+        }
+        else {
+          return ""+activeRange[i]+"+"
+        }
+      })
   }
 }
 
