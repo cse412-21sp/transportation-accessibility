@@ -41,6 +41,7 @@ The distribution of the total number of stops per block group has a clear right 
 # Accessibility & Geographics
 
 [data name:"block_group_data" source:"block_group_data.csv" /]
+[data name:"map_data" source:"king_county_block_groups.json" /]
 
 [var name:"accessMetric" value:"num_stops" /]
 [Radio value:accessMetric options:`[{value:"num_stops", label:"Number of Stops"}, {value:"avg_num_routes_per_stop", label:"Average Routes per Stop"}, {value:"avg_route_frequency", label:"Average Route Frequency (mins)"}, {value:"avg_accessible_stops", label:"Average Number of Accessible Stops"}]`  /]
@@ -49,7 +50,54 @@ The distribution of the total number of stops per block group has a clear right 
   [D3Choropleth data:block_group_data accessMetric:accessMetric /]
 [/FullWidth]
 
+// Best and worst block groups by each accessibility metric
+[IdyllVegaLite actions:false width:"100%" data:block_group_data spec:`
+  vl.hconcat(
+    vl.markBar()
+      .transform(
+        vl.window(vl.rank().as('Rank_one')).ignorePeers('true').sort(vl.field('num_stops').order('descending')),
+        vl.filter('datum.Rank_one <= 30')
+      )
+      .encode(
+        vl.x().fieldN('GEOID').sort(vl.fieldQ('num_stops').order('descending')),
+        vl.y().fieldQ('num_stops'),
+        vl.tooltip().fieldQ('num_stops')
+      ),
+    vl.markBar()
+      .transform(
+        vl.window(vl.rank().as('Rank_two')).ignorePeers('true').sort(vl.field('num_stops').order('descending')),
+        vl.filter('datum.Rank_two >= 1432')
+      )
+      .encode(
+        vl.x().fieldN('GEOID').sort(vl.fieldQ('num_stops').order('ascending')),
+        vl.y().fieldQ('num_stops'),
+        vl.tooltip().fieldQ('num_stops')
+      )
+  )
+  .toSpec()
+` /]
 
+// Pairwise scatters
+[IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
+  vl.markCircle()
+  .encode(
+    vl.x().fieldQ(vl.repeat('column')),
+    vl.y().fieldQ(vl.repeat('row')),
+    vl.tooltip().fieldN("GEOID")
+  )
+  .repeat({
+    row: ['num_stops', 'avg_num_routes_per_stop', 'avg_route_frequency', 'avg_accessible_stops'],
+    column: ['avg_accessible_stops', 'avg_route_frequency', 'avg_num_routes_per_stop', 'num_stops']
+  })
+  .toSpec()
+` /]
+
+// Map that doesn't work
+[IdyllVegaLite actions:false width:"container" data:map_data spec:`
+  vl.markGeoshape()
+  .project(vl.projection('mercator'))
+  .toSpec()
+` /]
 
 [Scroller className:"hasBackground" currentStep:myLocation]
 
