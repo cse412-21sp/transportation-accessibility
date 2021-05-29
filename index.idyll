@@ -20,7 +20,7 @@ To answer this, we utilize several datasets related to transit availability and 
 [data name:"block_group_data" source:"block_group_data.csv" /]
 
 [var name:"accessMetric" value:"num_stops" /]
-[Radio value:accessMetric options:`["num_stops", "avg_num_routes_per_stop", "avg_route_frequency", "avg_accessible_stops"]`  /]
+[Radio value:accessMetric options:`[{value:"num_stops", label:"Number of Stops"}, {value:"avg_num_routes_per_stop", label:"Average Routes per Stop"}, {value:"avg_route_frequency", label:"Average Route Frequency (mins)"}, {value:"avg_accessible_stops", label:"Average Number of Accessible Stops"}]`  /]
 
 [FullWidth]
   [D3Choropleth data:block_group_data accessMetric:accessMetric /]
