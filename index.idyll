@@ -17,6 +17,29 @@ In this project we explore the current level of transit accessibility at the blo
 
 To answer this, we utilize several datasets related to transit availability and the socioeconomics of the Seattle region. The fundamental transit schedule and stop location data is drawn from the King County Metro (KCM) [General Transit Feed Specification (GTFS)](http://metro.kingcounty.gov/gtfs/). This resource provides a static list of all available stops, routes, and schedules in the KCM network. To create the choropleth maps, block group shapefiles are taken from the American Community Survey (ACS) [TIGER shapefiles](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html). These designate areas at which socioeconomic census data is available for. The ACS also provides socioeconomic data in the form of marginal counts for each block group, as well as a set of limited microdata called the [public use microdata samples (PUMS)](https://www.census.gov/programs-surveys/acs/microdata.html).
 
+# Univariate Analysis
+
+![Race_Pie_Chart](./static/images/Race_Pie_Chart.png)
+We can see that the majority of King County is made up of white residents at about 2/3 of the population. The Asian population in King County
+has the second most residents with just 18%, and no other race comprises of more than 6% of the King County population.
+[br /][br /][br /][br /][br /]
+
+![Accessible_Stops](./static/images/Acc_Stops_Hist.png)
+The number of accessible stops per block group in King County is approximately normally distributed, with the majority of block groups
+having somewhere between 70 and 100 accessible stops. There are some outliers with close to 200 accessible stops, which are likely block
+groups located near downtown Seattle.
+[br /][br /][br /][br /][br /]
+
+
+![Total_Number_Of_Stops](./static/images/Num_Stops_Hist.png)
+
+[br /][br /]
+
+The distribution of the total number of stops per block group has a clear right skew, with most block groups having less than 
+50 stops.
+
+# Accessibility & Geographics
+
 [data name:"block_group_data" source:"block_group_data.csv" /]
 
 [var name:"accessMetric" value:"num_stops" /]
@@ -28,32 +51,6 @@ To answer this, we utilize several datasets related to transit availability and 
 
 
 
-
-# Univariate Analysis
-
-
-
-[Aside]
-![Race_Pie_Chart](./static/images/Race_Pie_Chart.png)
-
-![Accessible_Stops](./static/images/Acc_Stops_Hist.png)
-
-![Total_Number_Of_Stops](./static/images/Num_Stops_Hist.png)
-[/Aside]
-[br /][br /]
-
-We can see that the majority of King County is made up of white residents at about 2/3 of the population. The Asian population in King County
-has the second most residents with just 18%, and no other race comprises of more than 6% of the King County population.
-[br /][br /][br /][br /][br /]
-
-The number of accessible stops per block group in King County is approximately normally distributed, with the majority of block groups
-having somewhere between 70 and 100 accessible stops. There are some outliers with close to 200 accessible stops, which are likely block
-groups located near downtown Seattle.
-[br /][br /][br /][br /][br /]
-
-The distribution of the total number of stops per block group has a clear right skew, with most block groups having less than 
-50 stops.
-
 [Scroller className:"hasBackground" currentStep:myLocation]
 
   [Graphic className:"d3-component-container"]
@@ -61,29 +58,12 @@ The distribution of the total number of stops per block group has a clear right 
   [/Graphic]
 
   [Step]
-    This `Scroller` uses some custom CSS to set the background color to "#33333f" [Inline][div style:`{background: "#33333f", width: 12, height: 12}` /][/Inline].
+    This Graph shows Each Accessibility Metric by Race
   [/Step]
 
   [Step]
-    It also uses custom CSS to style the `Graphic` (which is a custom D3 component) so that it appears as a fixed visualization next to the scrolling text.
+    This Graph shows Each Accessibility Metric by Economic Status.
   [/Step]
 
-  [Step]
-    What's cool about this `CustomD3Component` is that it updates as we scroll. It does this by leveraging the `update` function to animate the point as it moves to a new position.
-  [/Step]
-
-  [Step]
-    To keep track of where we are in the `Scroller`, we first defined a dynamic Idyll variable named `myLocation` using the following code: `[var name:"myLocation" value:0 /]`
-  [/Step]
-
-  [Step]
-    Each time we scroll to a new `Step`, the `Graphic` updates it state based on this dynamic variable, which can be used to parameterize the visualization.
-  [/Step]
-
-  [Step]
-    Right now, the value of `myLocation` is [Display value:myLocation /]. Cool huh?
-
-    [span style:`{color:'#aaa', fontStyle:'italic'}`]If you scroll back and forth between this `Step` and the previous one, notice how the value that is displayed changes based on when the new `Step` is triggered.[/span]
-  [/Step]
 
 [/Scroller]
