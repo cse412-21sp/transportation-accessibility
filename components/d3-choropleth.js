@@ -61,6 +61,19 @@ function getActiveRange(props) {
   }
 }
 
+function getMetricName(props) {
+  switch (props.accessMetric) {
+    case "num_stops":
+      return "Number of Stops"
+    case "avg_num_routes_per_stop":
+      return "Average Routes per Stop"
+    case "avg_route_frequency":
+      return "Average Route Frequency (mins)"
+    case "avg_accessible_stops":
+      return "Average Number of Accessible Stops"
+  }
+}
+
 class D3Choropleth extends D3Component {
   initialize(node, props) {
     // The svg
@@ -69,6 +82,49 @@ class D3Choropleth extends D3Component {
       .style("height", height+'px')
       .style("border", '1px dashed #ccc')
     )
+
+    // Hover functions
+    function handleMouseOver(d, i) {
+      d3.select(this)
+        .style("opacity", 1)
+        .style("stroke", "black")
+    }
+    function handleMouseLeave(d, i) {
+      d3.select(this)
+        .style("opacity", .8)
+        .style("stroke", "#808080")
+    }
+
+    // Map and projection
+    const projection = d3.geoMercator()
+      .scale(90000)
+      .center([-122.60, 47.61])
+      .translate([width / 2, height / 2])
+
+    var g = svg.append("g");
+
+    // Load external data and boot
+    d3.json("https://raw.githubusercontent.com/cse412-21sp/transportation-accessibility/main/data/king_county_block_groups.geojson").then( function(data) {
+        // Draw the map
+          g.selectAll("path")
+            .data(data.features)
+            .join("path")
+            .attr("d", d3.geoPath()
+              .projection(projection)
+            )
+            .attr("fill", function(d) {return colorBlockGroups(d, props)})
+            .attr("class", function(d) {return "BlockGroup"})
+            .style("stroke", "#808080")
+            .on("mouseover", handleMouseOver)
+            .on("mouseleave", handleMouseLeave)
+    })
+    var zoom = d3.zoom()
+      .scaleExtent([1,1000000])
+      .on('zoom', function(event) {
+          g.selectAll('path')
+           .attr('transform', event.transform);
+      });
+    svg.call(zoom);
 
     // The Legend range of bins
     var activeRange = getActiveRange(props);
@@ -79,7 +135,9 @@ class D3Choropleth extends D3Component {
       .attr("class","LegendTitle")
       .attr("x", legendX)
       .attr("y", legendY-5)
-      .text(""+props.accessMetric)
+      .text(""+getMetricName(props))
+      .style("background-color", "white")
+      .style("fill", "black")
     svg
       .append('rect')
       .attr("class","LegendBackground")
@@ -126,41 +184,6 @@ class D3Choropleth extends D3Component {
           return ""+activeRange[i]+"+"
         }
       })
-
-    // Hover functions
-    function handleMouseOver(d, i) {
-      d3.select(this)
-        .style("opacity", 1)
-        .style("stroke", "black")
-    }
-    function handleMouseLeave(d, i) {
-      d3.select(this)
-        .style("opacity", .8)
-        .style("stroke", "#808080")
-    }
-
-    // Map and projection
-    const projection = d3.geoMercator()
-      .scale(90000)
-      .center([-122.60, 47.61])
-      .translate([width / 2, height / 2])
-
-    // Load external data and boot
-    d3.json("https://raw.githubusercontent.com/cse412-21sp/transportation-accessibility/main/data/king_county_block_groups.geojson").then( function(data) {
-        // Draw the map
-        svg.append("g")
-            .selectAll("path")
-            .data(data.features)
-            .join("path")
-                .attr("d", d3.geoPath()
-                  .projection(projection)
-                )
-                .attr("fill", function(d) {return colorBlockGroups(d, props)})
-                .attr("class", function(d) {return "BlockGroup"})
-                .style("stroke", "#808080")
-                .on("mouseover", handleMouseOver)
-                .on("mouseleave", handleMouseLeave)
-    })
   }
 
   // Use this function to update the visualization.
@@ -174,7 +197,7 @@ class D3Choropleth extends D3Component {
     //Update legend
     var activeRange = getActiveRange(props);
     this.svg.selectAll('.LegendTitle')
-      .text(""+props.accessMetric)
+      .text(""+getMetricName(props))
     this.svg.selectAll('.binRect')
       .attr("fill", function (d, props) {
         switch (props.accessMetric) {
