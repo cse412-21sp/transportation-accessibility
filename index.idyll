@@ -129,6 +129,18 @@ The results of this show that there is perhaps a small relationship between the 
   [D3Choropleth data:block_group_data accessMetric:accessMetric /]
 [/FullWidth]
 
+## Influence of Income on Public Transport Accessibility
+
+
+![income_numstops](./static/images/income_numstops.png)
+  [br /]
+![income_accessibility](./static/images/income_accessibility.png)
+[br /]
+
+There does not appear to be any correlation between household income and either of the transportation accessibility metrics. This is indicative of King County having fairly equal access to transportation in each block group regardless of their economic status. This is consistent with the effort that King County puts into [improving their transportation systems](https://www.seattle.gov/transportation/projects-and-programs/programs/transit-program/spot-improvements) as well as the many rankings that list [Seattle as number 1 for public transport](https://wallethub.com/edu/cities-with-the-best-worst-public-transportation/65028).
+
+
+
 [Scroller className:"hasBackground" currentStep:myLocation]
 
   [Graphic className:"d3-component-container"]
