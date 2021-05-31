@@ -38,36 +38,68 @@ groups located near downtown Seattle.
 The distribution of the total number of stops per block group has a clear right skew, with most block groups having less than 
 50 stops.
 
-In this section 
-// Best and worst block groups by each accessibility metric
+In this section we display the best and worst block groups for a few of the chosen accessibility metrics. These figures demonstrate the disparity in certain metrics across different regions in King County. Although it certainly make sense that some block groups require less transit access than others (e.g. places further from the downtown core, places with less people living in them), we want to determine whether these disproportionately affect smaller groups of the total population.
+
+// Best and worst block groups by each accessibility metric:
 [IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
     vl.markBar()
       .transform(
         vl.window(vl.rank().as('Rank_one')).ignorePeers('true').sort(vl.field('num_stops').order('descending')),
-        vl.filter('datum.Rank_one <= 30')
+        vl.filter('datum.Rank_one <= 30'),
+        vl.filter('datum.num_stops >= 0')
       )
       .encode(
         vl.x().fieldN('GEOID').sort(vl.fieldQ('num_stops').order('descending')),
         vl.y().fieldQ('num_stops'),
         vl.tooltip().fieldQ('num_stops')
       )
-  .toSpec()
+      .toSpec()
 ` /]
-
 [IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
     vl.markBar()
       .transform(
         vl.window(vl.rank().as('Rank_two')).ignorePeers('true').sort(vl.field('num_stops').order('descending')),
-        vl.filter('datum.Rank_two >= 1432')
+        vl.filter('datum.Rank_two >= 1432'),
+        vl.filter('datum.num_stops >= 0')
       )
       .encode(
         vl.x().fieldN('GEOID').sort(vl.fieldQ('num_stops').order('ascending')),
         vl.y().fieldQ('num_stops'),
         vl.tooltip().fieldQ('num_stops')
       )
-  .toSpec()
+      .toSpec()
 ` /]
 
+[IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
+    vl.markBar()
+      .transform(
+        vl.window(vl.rank().as('Rank_one')).ignorePeers('true').sort(vl.field('avg_accessible_stops').order('descending')),
+        vl.filter('datum.Rank_one <= 30'),
+        vl.filter('datum.avg_accessible_stops >= 0')
+      )
+      .encode(
+        vl.x().fieldN('GEOID').sort(vl.fieldQ('avg_accessible_stops').order('descending')),
+        vl.y().fieldQ('avg_accessible_stops'),
+        vl.tooltip().fieldQ('avg_accessible_stops')
+      )
+      .toSpec()
+` /]
+[IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
+    vl.markBar()
+      .transform(
+        vl.window(vl.rank().as('Rank_two')).ignorePeers('true').sort(vl.field('avg_accessible_stops').order('descending')),
+        vl.filter('datum.Rank_two >= 1432'),
+        vl.filter('datum.avg_accessible_stops >= 0')
+      )
+      .encode(
+        vl.x().fieldN('GEOID').sort(vl.fieldQ('avg_accessible_stops').order('ascending')),
+        vl.y().fieldQ('avg_accessible_stops'),
+        vl.tooltip().fieldQ('avg_accessible_stops')
+      )
+      .toSpec()
+` /]
+
+The accessibility metrics chosen for this analysis were determined from existing stops and route schedules provided in the King Country Metro GTFS data. There are numerous ways by which transit accessibility can be specified, and these are relatively basic. One consideration is that some of the metrics selected could be correlated with one another. For example locations with more stops might also have a higher number of routes per stop, since it would be easy for a route to stop at multiple stops which are close together in a single block group. To ensure that there is no multi-collinearity in the analysis of accessibility metrics, we create a pairwise scatterplot across each of the accessibility metrics, to ensure the metrics which are not correlated with one another.
 // Pairwise scatters
 [IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
   vl.markCircle()
@@ -83,6 +115,8 @@ In this section
   .toSpec()
 ` /]
 
+The results of this show that there is perhaps a small relationship between the number of stops in a block group, and its average number of routes per stop. As mentioned previously this may be due to the fact that if a route is going to be sent through a block group, and there are lots of other stops already present in that block group, it makes sense to send the route through those stops as well. However, it is still worth keeping each of these metrics in the analysis as they provide separate information which can be used to analyze the overall accessibility of a given block group.
+
 # Accessibility & Geographics
 
 [data name:"block_group_data" source:"block_group_data.csv" /]
@@ -94,13 +128,6 @@ In this section
 [FullWidth]
   [D3Choropleth data:block_group_data accessMetric:accessMetric /]
 [/FullWidth]
-
-// Map that doesn't work
-[IdyllVegaLite actions:false width:"container" data:map_data spec:`
-  vl.markGeoshape()
-  .project(vl.projection('mercator'))
-  .toSpec()
-` /]
 
 [Scroller className:"hasBackground" currentStep:myLocation]
 
