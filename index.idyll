@@ -38,66 +38,6 @@ groups located near downtown Seattle.
 The distribution of the total number of stops per block group has a clear right skew, with most block groups having less than 
 50 stops.
 
-In this section we display the best and worst block groups for a few of the chosen accessibility metrics. These figures demonstrate the disparity in certain metrics across different regions in King County. Although it certainly make sense that some block groups require less transit access than others (e.g. places further from the downtown core, places with less people living in them), we want to determine whether these disproportionately affect smaller groups of the total population.
-
-// Best and worst block groups by each accessibility metric:
-[IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
-    vl.markBar()
-      .transform(
-        vl.window(vl.rank().as('Rank_one')).ignorePeers('true').sort(vl.field('num_stops').order('descending')),
-        vl.filter('datum.Rank_one <= 30'),
-        vl.filter('datum.num_stops >= 0')
-      )
-      .encode(
-        vl.x().fieldN('GEOID').sort(vl.fieldQ('num_stops').order('descending')),
-        vl.y().fieldQ('num_stops'),
-        vl.tooltip().fieldQ('num_stops')
-      )
-      .toSpec()
-` /]
-[IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
-    vl.markBar()
-      .transform(
-        vl.window(vl.rank().as('Rank_two')).ignorePeers('true').sort(vl.field('num_stops').order('descending')),
-        vl.filter('datum.Rank_two >= 1432'),
-        vl.filter('datum.num_stops >= 0')
-      )
-      .encode(
-        vl.x().fieldN('GEOID').sort(vl.fieldQ('num_stops').order('ascending')),
-        vl.y().fieldQ('num_stops'),
-        vl.tooltip().fieldQ('num_stops')
-      )
-      .toSpec()
-` /]
-
-[IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
-    vl.markBar()
-      .transform(
-        vl.window(vl.rank().as('Rank_one')).ignorePeers('true').sort(vl.field('avg_accessible_stops').order('descending')),
-        vl.filter('datum.Rank_one <= 30'),
-        vl.filter('datum.avg_accessible_stops >= 0')
-      )
-      .encode(
-        vl.x().fieldN('GEOID').sort(vl.fieldQ('avg_accessible_stops').order('descending')),
-        vl.y().fieldQ('avg_accessible_stops'),
-        vl.tooltip().fieldQ('avg_accessible_stops')
-      )
-      .toSpec()
-` /]
-[IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
-    vl.markBar()
-      .transform(
-        vl.window(vl.rank().as('Rank_two')).ignorePeers('true').sort(vl.field('avg_accessible_stops').order('descending')),
-        vl.filter('datum.Rank_two >= 1432'),
-        vl.filter('datum.avg_accessible_stops >= 0')
-      )
-      .encode(
-        vl.x().fieldN('GEOID').sort(vl.fieldQ('avg_accessible_stops').order('ascending')),
-        vl.y().fieldQ('avg_accessible_stops'),
-        vl.tooltip().fieldQ('avg_accessible_stops')
-      )
-      .toSpec()
-` /]
 
 The accessibility metrics chosen for this analysis were determined from existing stops and route schedules provided in the King Country Metro GTFS data. There are numerous ways by which transit accessibility can be specified, and these are relatively basic. One consideration is that some of the metrics selected could be correlated with one another. For example locations with more stops might also have a higher number of routes per stop, since it would be easy for a route to stop at multiple stops which are close together in a single block group. To ensure that there is no multi-collinearity in the analysis of accessibility metrics, we create a pairwise scatterplot across each of the accessibility metrics, to ensure the metrics which are not correlated with one another.
 // Pairwise scatters
@@ -129,30 +69,22 @@ The results of this show that there is perhaps a small relationship between the 
   [D3Choropleth data:block_group_data accessMetric:accessMetric /]
 [/FullWidth]
 
-## Influence of Income on Public Transport Accessibility
-
-
-![income_numstops](./static/images/income_numstops.png)
-  [br /]
-![income_accessibility](./static/images/income_accessibility.png)
-[br /]
-
-There does not appear to be any correlation between household income and either of the transportation accessibility metrics. This is indicative of King County having fairly equal access to transportation in each block group regardless of their economic status. This is consistent with the effort that King County puts into [improving their transportation systems](https://www.seattle.gov/transportation/projects-and-programs/programs/transit-program/spot-improvements) as well as the many rankings that list [Seattle as number 1 for public transport](https://wallethub.com/edu/cities-with-the-best-worst-public-transportation/65028).
-
-
 
 [Scroller className:"hasBackground" currentStep:myLocation]
 
-  [Graphic className:"d3-component-container"]
-    [D3Choropleth data:block_group_data className:"d3-component" state:`myLocation+1` /]
+  [Graphic]
+    [D3Choropleth data:block_group_data accessMetric:accessMetric /]
   [/Graphic]
 
   [Step]
-    This Graph shows Each Accessibility Metric by Race
-  [/Step]
+    ## Influence of Income on Public Transport Accessibility
+    ![income_numstops](./static/images/income_numstops.png)
+    [br /]
+    
+    ![income_accessibility](./static/images/income_accessibility.png)
+    [br /]
 
-  [Step]
-    This Graph shows Each Accessibility Metric by Economic Status.
+    There does not appear to be any correlation between household income and either of the transportation accessibility metrics. This is indicative of King County having fairly equal access to transportation in each block group regardless of their economic status. This is consistent with the effort that King County puts into [improving their transportation systems](https://www.seattle.gov/transportation/projects-and-programs/programs/transit-program/spot-improvements) as well as the many rankings that list [Seattle as number 1 for public transport](https://wallethub.com/edu/cities-with-the-best-worst-public-transportation/65028).
   [/Step]
 
 
