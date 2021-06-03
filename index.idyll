@@ -66,9 +66,8 @@ The results of this show that there is perhaps a small relationship between the 
 [Radio value:accessMetric options:`[{value:"num_stops", label:"Number of Stops"}, {value:"avg_num_routes_per_stop", label:"Average Routes per Stop"}, {value:"avg_route_frequency", label:"Average Route Frequency (mins)"}, {value:"avg_accessible_stops", label:"Average Number of Accessible Stops"}]`  /]
 
 [FullWidth]
-  [D3Choropleth data:block_group_data accessMetric:accessMetric /]
+    [D3Choropleth data:block_group_data accessMetric:accessMetric /]
 [/FullWidth]
-
 
 [Scroller className:"hasBackground" currentStep:myLocation]
 
@@ -77,7 +76,7 @@ The results of this show that there is perhaps a small relationship between the 
   [/Graphic]
 
   [Step]
-    ## Influence of Income on Public Transport Accessibility
+    ## Influence of Income on Public Transport Accessibility 
     ![income_numstops](./static/images/income_numstops.png)
     [br /]
     
@@ -85,6 +84,23 @@ The results of this show that there is perhaps a small relationship between the 
     [br /]
 
     There does not appear to be any correlation between household income and either of the transportation accessibility metrics. This is indicative of King County having fairly equal access to transportation in each block group regardless of their economic status. This is consistent with the effort that King County puts into [improving their transportation systems](https://www.seattle.gov/transportation/projects-and-programs/programs/transit-program/spot-improvements) as well as the many rankings that list [Seattle as number 1 for public transport](https://wallethub.com/edu/cities-with-the-best-worst-public-transportation/65028).
+  [/Step]
+
+  [Step] 
+    ## Influence of Race on Public Transport Accessibility (Number of Stops)
+    ![race_num_stops](./static/images/Race_vs_num_stops.png)
+    [br /]
+  [/Step]
+
+  [Step]
+    ## Influence of Race on Public Transport Accessibility (Average Accessible Stops)
+    ![race_avg_accessible_stops](./static/images/Race_vs_avg_accessible_stops.png)
+    [br /]
+  [/Step]
+  
+  [Step]
+    ## Conclusion
+    In King County, the transportation accessibility metrics doesn't have obvious correlation with median income or race. Thus we come to a conclution that King County has a fairly equal access to transportation in each block group regardless of economic status and race. This is consistent with the effor that King County puts into improving their transportation systems as well as the many rankings that list Seattle as number 1 for public transport.
   [/Step]
 
 
