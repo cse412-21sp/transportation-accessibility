@@ -17,6 +17,10 @@ In this project we explore the current level of transit accessibility at the blo
 
 To answer this, we utilize several datasets related to transit availability and the socioeconomics of the Seattle region. The fundamental transit schedule and stop location data is drawn from the King County Metro (KCM) [General Transit Feed Specification (GTFS)](http://metro.kingcounty.gov/gtfs/). This resource provides a static list of all available stops, routes, and schedules in the KCM network. To create the choropleth maps, block group shapefiles are taken from the American Community Survey (ACS) [TIGER shapefiles](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html). These designate areas at which socioeconomic census data is available for. The ACS also provides socioeconomic data in the form of marginal counts for each block group, as well as a set of limited microdata called the [public use microdata samples (PUMS)](https://www.census.gov/programs-surveys/acs/microdata.html).
 
+[FullWidth]
+  [TableauEmbed link:"https://public.tableau.com/shared/X9HTGTGK8?:display_count=n&:origin=viz_share_link" width:"100%" height:"900"/]
+[/FullWidth]
+
 # Univariate Analysis
 
 ![Race_Pie_Chart](./static/images/Race_Pie_Chart.png)
@@ -40,20 +44,22 @@ The distribution of the total number of stops per block group has a clear right 
 
 
 The accessibility metrics chosen for this analysis were determined from existing stops and route schedules provided in the King Country Metro GTFS data. There are numerous ways by which transit accessibility can be specified, and these are relatively basic. One consideration is that some of the metrics selected could be correlated with one another. For example locations with more stops might also have a higher number of routes per stop, since it would be easy for a route to stop at multiple stops which are close together in a single block group. To ensure that there is no multi-collinearity in the analysis of accessibility metrics, we create a pairwise scatterplot across each of the accessibility metrics, to ensure the metrics which are not correlated with one another.
-// Pairwise scatters
-[IdyllVegaLite actions:false width:"container" data:block_group_data spec:`
-  vl.markCircle()
-  .encode(
-    vl.x().fieldQ(vl.repeat('column')),
-    vl.y().fieldQ(vl.repeat('row')),
-    vl.tooltip().fieldN("GEOID")
-  )
-  .repeat({
-    row: ['num_stops', 'avg_num_routes_per_stop', 'avg_route_frequency', 'avg_accessible_stops'],
-    column: ['avg_accessible_stops', 'avg_route_frequency', 'avg_num_routes_per_stop', 'num_stops']
-  })
-  .toSpec()
-` /]
+
+[FullWidth]
+  [IdyllVegaLite actions:false width:"100%" data:block_group_data spec:`
+    vl.markCircle()
+    .encode(
+      vl.x().fieldQ(vl.repeat('column')),
+      vl.y().fieldQ(vl.repeat('row')),
+      vl.tooltip().fieldN("GEOID")
+    )
+    .repeat({
+      row: ['num_stops', 'avg_num_routes_per_stop', 'avg_route_frequency', 'avg_accessible_stops'],
+      column: ['avg_accessible_stops', 'avg_route_frequency', 'avg_num_routes_per_stop', 'num_stops']
+    })
+    .toSpec()
+  ` /]
+[/FullWidth]
 
 The results of this show that there is perhaps a small relationship between the number of stops in a block group, and its average number of routes per stop. As mentioned previously this may be due to the fact that if a route is going to be sent through a block group, and there are lots of other stops already present in that block group, it makes sense to send the route through those stops as well. However, it is still worth keeping each of these metrics in the analysis as they provide separate information which can be used to analyze the overall accessibility of a given block group.
 
@@ -70,11 +76,6 @@ The results of this show that there is perhaps a small relationship between the 
 [/FullWidth]
 
 [Scroller className:"hasBackground" currentStep:myLocation]
-
-  [Graphic]
-    [D3Choropleth data:block_group_data accessMetric:accessMetric /]
-  [/Graphic]
-
   [Step]
     ## Influence of Income on Public Transport Accessibility 
     ![income_numstops](./static/images/income_numstops.png)
@@ -102,6 +103,4 @@ The results of this show that there is perhaps a small relationship between the 
     ## Conclusion
     In King County, the transportation accessibility metrics doesn't have obvious correlation with median income or race. Thus we come to a conclution that King County has a fairly equal access to transportation in each block group regardless of economic status and race. This is consistent with the effor that King County puts into improving their transportation systems as well as the many rankings that list Seattle as number 1 for public transport.
   [/Step]
-
-
 [/Scroller]
