@@ -7,8 +7,8 @@
   author:"Zack Aemmer, Patrick Cheng, Avin Kana, Jie Shao"
   authorLink: "https://github.com/cse412-21sp/transportation-accessibility"
   date:"June 7, 2021"
-  background:"#030027"
-  color:"#F2F3D9"
+  background:"url(static/images/bus-5.gif)"
+  color:"#D2691E"
 /]
 [data name:"block_group_data" source:"block_group_data.csv" /]
 [data name:"map_data" source:"king_county_block_groups.json" /]
@@ -114,10 +114,13 @@ Although this visualization captures how income and access vary throughout the r
 There does not appear to be any correlation between household income and either of the transportation accessibility metrics. This is indicative of King County having fairly equal access to transportation in each block group regardless of their economic status. This is consistent with the effort that King County puts into [improving their transportation systems](https://www.seattle.gov/transportation/projects-and-programs/programs/transit-program/spot-improvements) as well as the many rankings that list [Seattle as number 1 for public transport](https://wallethub.com/edu/cities-with-the-best-worst-public-transportation/65028).
 
 ## Influence of Race on Public Transport Accessibility (Number of Stops)
-![race_num_stops](./static/images/Race_vs_num_stops.png)
+[FullWidth]
+  ![race_num_stops](./static/images/Race_vs_num_stops.png)
+[/FullWidth]
 
 ## Influence of Race on Public Transport Accessibility (Average Accessible Stops)
-![race_avg_accessible_stops](./static/images/Race_vs_avg_accessible_stops.png)
-
+[FullWidth]
+  ![race_avg_accessible_stops](./static/images/Race_vs_avg_accessible_stops.png)
+[/FullWidth]
 # Conclusion
 In King County, the transportation accessibility metrics doesn't have obvious correlation with median income or race. Thus we come to a conclution that King County has a fairly equal access to transportation in each block group regardless of economic status and race. This is consistent with the effor that King County puts into improving their transportation systems as well as the many rankings that list Seattle as number 1 for public transport.
