@@ -9,7 +9,10 @@ Jie Shao
 
 ### Contribution Statements
 
-Add individual contribution statements here.
+Zack Aemmer:
+Patrick Cheng: 
+Avin Kana:
+Jie Shao:
 
 ## Project Proposal Abstract
 
