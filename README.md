@@ -13,7 +13,7 @@ Zack Aemmer:
 
 Patrick Cheng: Prepared data, took meeting notes, created two static visualizations, helped created the interactive map, made the video, website aesthetics.
 
-Avin Kana:
+Avin Kana: Prepared data, univariate analysis visualizations/text, income vs accessibility scatter plots/text
 
 Jie Shao:
 
