@@ -15,7 +15,7 @@ Patrick Cheng: Prepared data, took meeting notes, created two static visualizati
 
 Avin Kana: Prepared data, univariate analysis visualizations/text, income vs accessibility scatter plots/text
 
-Jie Shao:
+Jie Shao: Web layout design & aesthetics
 
 ## Project Proposal Abstract
 
