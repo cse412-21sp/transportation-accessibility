@@ -11,7 +11,7 @@ Jie Shao
 
 Zack Aemmer: Created accessibility metrics dataset, wrote narrative and made visualizations (with help on interactive maps) prior to "Who is affected" section, D3 map (didn't use it), interactive income histogram/map visualization
 
-Patrick Cheng: Prepared data, took meeting notes, created two static visualizations, helped created the interactive map, made the video, website aesthetics.
+Patrick Cheng: Prepared data, took meeting notes, created static visualizations for "Race vs Accessibility" section, helped created the interactive map, made the video, website aesthetics.
 
 Avin Kana: Prepared data, univariate analysis visualizations/text, income vs accessibility scatter plots/text
 
