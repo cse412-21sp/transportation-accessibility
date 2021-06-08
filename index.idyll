@@ -50,15 +50,19 @@ In the visualization below, each metric is shown separately for all block groups
 
 As you may have noticed, different metrics indicate concentrations of transit accessibility in different locations. For example, the Number of Stops and Average Number of Routes metrics are extremely high in downtown Seattle. There is in part because there is lots of demand here; due both to high concentrations of housing and jobs. It is also a location that is quite central to the region, so it is easy for most routes to have a stop here, which increases the overall number of routes that can be accessed per stop.
 
+[FullWidth]
   [TableauEmbed link:"https://public.tableau.com/views/cse412_closeup_1/Dashboard2?:language=en-US&:display_count=n&:origin=viz_share_link"
   width:"100%"
   height:"850"/]
+[/FullWidth]
 
 On the other hand, if one looks at the Average Number of Accessible Stops, a different story is told. Here we can see that the neighborhoods of Burien, Renton/Kent, Auburn, and Bothell among others are able to access many more stops than the rest of the county. Likewise the Average Frequency metric is quite well-distributed spatially across the county, as most routes follow a similar scheduling pattern that repeats at 15, 30, or 45-minute headways throughout the day.
 
+[FullWidth]
   [TableauEmbed link:"https://public.tableau.com/views/cse412_closeup_2/Dashboard22?:language=en-US&:display_count=n&:origin=viz_share_link"
   width:"100%"
   height:"850"/]
+[/FullWidth]
 
 # 👨*So who is affected?*
 These prior mapping visualizations give us some idea of how transit access is distributed spatially, but we would also like to see how it relates to other socioeconomic variables such as income, racial breakdown, and quantity of transit users in a block group.
@@ -91,18 +95,13 @@ The visualization below allows you to explore the relationship between income an
 Although this visualization captures how income and access vary throughout the region, it is less effective at getting to the root of the question; how do income and accessibility correlate? This relationship can be more clearly seen in the scatterplot visualizations below:
 
 ## Influence of Income on Public Transport Accessibility
-[Scroller]
 
-  [Graphic]
-    ![income_numstops](./static/images/income_numstops.png)
-    ![income_accessibility](./static/images/income_accessibility.png)
-  [/Graphic]
+![income_numstops](./static/images/income_numstops.png)
+![income_accessibility](./static/images/income_accessibility.png)
 
-  [Step]
-   There does not appear to be any correlation between household income and either of the transportation accessibility metrics. This is indicative of King County having fairly equal access to transportation in each block group regardless of their economic status. This is consistent with the effort that King County puts into [improving their transportation systems](https://www.seattle.gov/transportation/projects-and-programs/programs/transit-program/spot-improvements) as well as the many rankings that list [Seattle as number 1 for public transport](https://wallethub.com/edu/cities-with-the-best-worst-public-transportation/65028).
-  [/Step]
+There does not appear to be any correlation between household income and either of the transportation accessibility metrics. This is indicative of King County having fairly equal access to transportation in each block group regardless of their economic status. This is consistent with the effort that King County puts into [improving their transportation systems](https://www.seattle.gov/transportation/projects-and-programs/programs/transit-program/spot-improvements) as well as the many rankings that list [Seattle as number 1 for public transport](https://wallethub.com/edu/cities-with-the-best-worst-public-transportation/65028).
 
-[/Scroller]
+
 
 ## Influence of Race on Public Transport Accessibility (Number of Stops)
 [FullWidth]
